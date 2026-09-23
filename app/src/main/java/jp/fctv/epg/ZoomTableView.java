@@ -44,6 +44,7 @@ public class ZoomTableView extends View {
     private int maxTime = 1440;
     private float timeWidth, channelWidth, headerHeight, hourHeight;
     private boolean scaling;
+    private String message = "";
 
     public ZoomTableView(Context c) { super(c); init(c); }
     public ZoomTableView(Context c, AttributeSet a) { super(c, a); init(c); }
@@ -79,6 +80,11 @@ public class ZoomTableView extends View {
         invalidate();
     }
 
+    public void setMessage(String value) {
+        message = value == null ? "" : value;
+        invalidate();
+    }
+
     public void setSchedule(List<Channel> value, int min, int max) {
         channels = value == null ? new ArrayList<Channel>() : value;
         minTime = Math.max(0, min);
@@ -107,6 +113,18 @@ public class ZoomTableView extends View {
     @Override protected void onDraw(Canvas c) {
         super.onDraw(c);
         updateSizes();
+
+        if (!message.isEmpty()) {
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(0xff333333);
+            paint.setTextSize(dp(16) * scale);
+            float y = dp(42) * scale;
+            for (String line : message.split("\\n")) {
+                c.drawText(line, dp(18) * scale, y, paint);
+                y += dp(26) * scale;
+            }
+            return;
+        }
 
         // Header
         paint.setStyle(Paint.Style.FILL);
