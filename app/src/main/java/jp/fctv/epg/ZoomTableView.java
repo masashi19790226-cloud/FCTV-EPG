@@ -10,7 +10,7 @@ import android.widget.ScrollView;
 
 public class ZoomTableView extends ScrollView {
 
-    private final ScaleGestureDetector detector;
+    private ScaleGestureDetector detector;
     private float scale = 1f;
     private float baseText = 15f;
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
